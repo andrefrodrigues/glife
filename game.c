@@ -1,5 +1,6 @@
 #include"game.h"
-
+#include<stdio.h>
+#define BUFFER_SIZE 100
 void game_free(Game *game){
     if(game->board!=NULL)
         free(game->board);
@@ -20,7 +21,12 @@ Game *game_new(void){
 }
 
 int game_parse_board(Game *game, GameConfig *config){
-
+    if(config==NULL||game==NULL)
+        return 1;
+    char buffer[BUFFER_SIZE];
+    size_t rows,cols;
+    fscanf(config->input_file,"Rows:%zu\n",rows);
+    fscanf(config->input_file,"Cols:%zu\n",cols);
     return 0;
 }
 
