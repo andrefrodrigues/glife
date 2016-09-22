@@ -25,8 +25,10 @@ int game_parse_board(Game *game, GameConfig *config){
         return 1;
     char buffer[BUFFER_SIZE];
     size_t rows,cols;
-    fscanf(config->input_file,"Rows:%zu\n",rows);
-    fscanf(config->input_file,"Cols:%zu\n",cols);
+    fscanf(config->input_file,"Rows:%zu\n",&rows);
+    fscanf(config->input_file,"Cols:%zu\n",&cols);
+    game->rows = rows;
+    game->cols=cols;
     return 0;
 }
 
