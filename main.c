@@ -10,6 +10,7 @@ int main(int argc,char *argv[]){
     game_parse_board(g,gc);
     printf("Rows: %zu\n",g->rows);
     printf("Cols: %zu\n",g->cols);
+    game_print_board(g);
     }
     return 0;
 }

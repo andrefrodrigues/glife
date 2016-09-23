@@ -1,5 +1,7 @@
 #include"game.h"
 #include<stdio.h>
+#include<assert.h>
+
 #define BUFFER_SIZE 100
 void game_free(Game *game){
     if(game->board!=NULL)
@@ -29,11 +31,30 @@ int game_parse_board(Game *game, GameConfig *config){
     fscanf(config->input_file,"Cols:%zu\n",&cols);
     game->rows = rows;
     game->cols=cols;
+    game->board = malloc(rows*cols*sizeof(char));
+    if(game->board==NULL)
+        return 1;
+       int i=0;
+       char c;
+       while((c=getc(config->input_file))!=EOF){
+           if(c!='\n'){
+            game->board[i]=c;
+            i++;
+           }
+       } 
     return 0;
 }
 
 void game_print_board(Game *game){
-
+    int i;
+    if(game!=NULL){
+        for(i=0;i<game->rows*game->cols;i++){
+            if(i%game->cols==0)
+                putchar('\n');
+            putchar(game->board[i]);
+        }
+        putchar('\n');
+    }
 }
 
 void game_cell_set_alive(Game *game, size_t row, size_t col){
