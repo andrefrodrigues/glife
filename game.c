@@ -38,7 +38,7 @@ int game_parse_board(Game *game, GameConfig *config){
        char c;
        while((c=getc(config->input_file))!=EOF){
            if(c!='\n'){
-            game->board[i]=c;
+            game->board[i]=c=='#'?1:0;
             i++;
            }
        } 
@@ -51,7 +51,10 @@ void game_print_board(Game *game){
         for(i=0;i<game->rows*game->cols;i++){
             if(i%game->cols==0)
                 putchar('\n');
-            putchar(game->board[i]);
+                if(game->board[i])
+                    putchar('#');
+                    else
+                    putchar('.');
         }
         putchar('\n');
     }
