@@ -10,11 +10,12 @@ void game_free(Game *game){
 }
 
 int game_cell_is_alive(Game *game, size_t row, size_t col){
-    return 0;
+   
+    return  game->board[row*game->cols+col];
 }
 
 int game_cell_is_dead(Game *game, size_t row, size_t col){
-    return 0;
+    return !game->board[row*game->cols+col];
 }
 
 Game *game_new(void){
@@ -61,13 +62,13 @@ void game_print_board(Game *game){
 }
 
 void game_cell_set_alive(Game *game, size_t row, size_t col){
-
+    game->board[row*game->cols+col] = 1;
 }
 
 void game_cell_set_dead(Game *game, size_t row, size_t col){
-
+    game->board[row*game->cols+col] = 0;
 }
-
+//TODO
 int game_tick(Game *game){
     return 0;
 }

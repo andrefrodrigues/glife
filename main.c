@@ -11,6 +11,8 @@ int main(int argc,char *argv[]){
     printf("Rows: %zu\n",g->rows);
     printf("Cols: %zu\n",g->cols);
     game_print_board(g);
+    printf("%d\n",game_cell_is_alive(g,0,0));
+    printf("%d\n",game_cell_is_alive(g,0,1));
     }
     return 0;
 }
