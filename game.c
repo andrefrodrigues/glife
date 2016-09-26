@@ -10,7 +10,6 @@ void game_free(Game *game){
 }
 
 int game_cell_is_alive(Game *game, size_t row, size_t col){
-   
     return  game->board[row*game->cols+col];
 }
 
@@ -68,7 +67,34 @@ void game_cell_set_alive(Game *game, size_t row, size_t col){
 void game_cell_set_dead(Game *game, size_t row, size_t col){
     game->board[row*game->cols+col] = 0;
 }
+
 //TODO
+/*
+Regras: 
+qualquer celula viva com < 2 vivos morre
+qualquer celula viva com 2 ou 3 vivos vive
+qualquer celula viva com > 3 vivos morre
+qualquer celula com 3 vivos vive
+*/
+
+//returns the number of neighbours for the rules
+int get_cell_alive_neighbours(game,size_t row, size_t cols){
+    
+    return 0;
+}
+
 int game_tick(Game *game){
+    int x,y;
+    for(y=0;y<game->rows;y++){
+        for(x=0;x<game->cols;x++){
+            if(game_cell_is_alive(game,y,x)){
+                
+            }
+            else{
+
+            }
+        }
+    }
+
     return 0;
 }
