@@ -10,10 +10,12 @@ void game_free(Game *game){
 }
 
 int game_cell_is_alive(Game *game, size_t row, size_t col){
+    assert(row*game->cols+col < game->rows*game->cols);
     return  game->board[row*game->cols+col];
 }
 
 int game_cell_is_dead(Game *game, size_t row, size_t col){
+    assert(row*game->cols+col < game->rows*game->cols);
     return !game->board[row*game->cols+col];
 }
 
@@ -25,7 +27,6 @@ Game *game_new(void){
 int game_parse_board(Game *game, GameConfig *config){
     if(config==NULL||game==NULL)
         return 1;
-    char buffer[BUFFER_SIZE];
     size_t rows,cols;
     fscanf(config->input_file,"Rows:%zu\n",&rows);
     fscanf(config->input_file,"Cols:%zu\n",&cols);
@@ -49,7 +50,7 @@ void game_print_board(Game *game){
     int i;
     if(game!=NULL){
         for(i=0;i<game->rows*game->cols;i++){
-            if(i%game->cols==0)
+            if(i%game->cols==0&&i!=0)
                 putchar('\n');
                 if(game->board[i])
                     putchar('#');
@@ -68,19 +69,37 @@ void game_cell_set_dead(Game *game, size_t row, size_t col){
     game->board[row*game->cols+col] = 0;
 }
 
-//TODO
+
 /*
 Regras: 
 qualquer celula viva com < 2 vivos morre
 qualquer celula viva com 2 ou 3 vivos vive
 qualquer celula viva com > 3 vivos morre
 qualquer celula com 3 vivos vive
-*/
+*/ 
 
-//returns the number of neighbours for each cell
-int get_cell_alive_neighbours(Game *game,size_t row, size_t cols){
-    
-    return 0;
+int get_cell_alive_neighbours(Game *game,int row, int col){
+    int count=0,x,y,currentRow,currentCol;
+    for(y=row-1;y<=row+1;y++){
+        currentRow=y;
+        if(y<0)
+          currentRow=game->rows-1;
+          if(currentRow > game->rows-1)
+             currentRow=0;
+        for(x=col-1;x<=col+1;x++){
+            currentCol=x;
+            if(x<0)
+                currentCol= game->cols-1;
+            if(currentCol > game->cols-1)
+                currentCol=0;
+            if(game_cell_is_alive(game,currentRow,currentCol)){
+                if(currentCol!=col || currentRow!=row){
+                    count++;
+                }
+            }
+        }
+    }
+    return count;
 }
 
 int game_tick(Game *game){
@@ -94,14 +113,18 @@ int game_tick(Game *game){
     for(y=0;y<game->rows;y++){
         for(x=0;x<game->cols;x++){
             neighbours[y*game->cols+x] = get_cell_alive_neighbours(game,y,x);
+         
         }
     }
     for(i=0;i<board_size;i++){
+        if(i%game->cols==0&&i!=0)
+            printf("\n");
+        printf("%d ",neighbours[i]);
         if(neighbours[i]<2 || neighbours[i]>3)
             game->board[i]=0;
         else
             game->board[i]=1;
     }
-
+    printf("\n");
     return 0;
 }

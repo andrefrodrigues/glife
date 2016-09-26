@@ -1,6 +1,6 @@
+#define _POSIX_C_SOURCE 2
 #include"config.h"
 #include<unistd.h>
-
 #define ARGUMENTS "dsn:"
 #define DEFAULT_ITERATIONS 20
 
