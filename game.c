@@ -77,23 +77,30 @@ qualquer celula viva com > 3 vivos morre
 qualquer celula com 3 vivos vive
 */
 
-//returns the number of neighbours for the rules
-int get_cell_alive_neighbours(game,size_t row, size_t cols){
+//returns the number of neighbours for each cell
+int get_cell_alive_neighbours(Game *game,size_t row, size_t cols){
     
     return 0;
 }
 
 int game_tick(Game *game){
-    int x,y;
+    if(!game)
+        return 1;
+    if(!game->board)
+        return 1;
+    int x,y,i;
+    size_t board_size =game->rows*game->cols;
+    char neighbours[board_size];
     for(y=0;y<game->rows;y++){
         for(x=0;x<game->cols;x++){
-            if(game_cell_is_alive(game,y,x)){
-                
-            }
-            else{
-
-            }
+            neighbours[y*game->cols+x] = get_cell_alive_neighbours(game,y,x);
         }
+    }
+    for(i=0;i<board_size;i++){
+        if(neighbours[i]<2 || neighbours[i]>3)
+            game->board[i]=0;
+        else
+            game->board[i]=1;
     }
 
     return 0;
