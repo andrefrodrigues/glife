@@ -80,17 +80,18 @@ qualquer celula com 3 vivos vive
 
 int get_cell_alive_neighbours(Game *game,int row, int col){
     int count=0,x,y,currentRow,currentCol;
+
     for(y=row-1;y<=row+1;y++){
         currentRow=y;
         if(y<0)
           currentRow=game->rows-1;
-          if(currentRow > game->rows-1)
+        else if(currentRow > game->rows-1)
              currentRow=0;
         for(x=col-1;x<=col+1;x++){
             currentCol=x;
             if(x<0)
                 currentCol= game->cols-1;
-            if(currentCol > game->cols-1)
+            else if(currentCol > game->cols-1)
                 currentCol=0;
             if(game_cell_is_alive(game,currentRow,currentCol)){
                 if(currentCol!=col || currentRow!=row){
@@ -116,13 +117,16 @@ int game_tick(Game *game){
          
         }
     }
+
     for(i=0;i<board_size;i++){
         if(i%game->cols==0&&i!=0)
+            printf("\n");
+        printf("%d",neighbours[i]);
         if(neighbours[i]<2 || neighbours[i]>3)
             game->board[i]=0;
         else
             game->board[i]=1;
     }
-    
+    printf("\n");
     return 0;
 }

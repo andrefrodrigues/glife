@@ -19,6 +19,7 @@ int main(int argc,char *argv[]){
             }
         }
         if(!gc->silent){
+            game_tick(g);
             printf("Generation %d:\n",current);
             game_print_board(g);
         }
