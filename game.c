@@ -118,13 +118,11 @@ int game_tick(Game *game){
     }
     for(i=0;i<board_size;i++){
         if(i%game->cols==0&&i!=0)
-            printf("\n");
-        printf("%d ",neighbours[i]);
         if(neighbours[i]<2 || neighbours[i]>3)
             game->board[i]=0;
         else
             game->board[i]=1;
     }
-    printf("\n");
+    
     return 0;
 }
