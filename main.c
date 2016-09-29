@@ -23,6 +23,8 @@ int main(int argc,char *argv[]){
             game_print_board(g);
         }
     }
+    game_config_free(gc);
+    game_free(g);
     }
     return 0;
 }
