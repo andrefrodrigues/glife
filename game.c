@@ -128,7 +128,7 @@ int game_tick(Game *game){
         previous = game->board[i];
         if(neighbours[i]<2 || neighbours[i]>3)
             game->board[i]=0;
-        else if(neighbours[i] ==2 && game->board[i] || neighbours[i]==3)
+        else if((neighbours[i] ==2 && game->board[i] )|| neighbours[i]==3)
             game->board[i]=1;
         else
             game->board[i] =0;
