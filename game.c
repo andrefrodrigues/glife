@@ -25,9 +25,13 @@ Game *game_new(void){
 }
 
 int game_parse_board(Game *game, GameConfig *config){
+    size_t rows;
+    size_t cols;
+    int i=0;
+    char c;
     if(config==NULL||game==NULL)
         return 1;
-    size_t rows,cols;
+
     fscanf(config->input_file,"Rows:%zu\n",&rows);
     fscanf(config->input_file,"Cols:%zu\n",&cols);
     game->rows = rows;
@@ -35,8 +39,6 @@ int game_parse_board(Game *game, GameConfig *config){
     game->board = malloc(rows*cols*sizeof(char));
     if(game->board==NULL)
         return 1;
-       int i=0;
-       char c;
        while((c=getc(config->input_file))!=EOF){
            if(c!='\n'){
             game->board[i]=c=='#'?1:0;
@@ -104,11 +106,15 @@ int get_cell_alive_neighbours(Game *game,int row, int col){
 
 int game_tick(Game *game){
     int unchanged=1;
+    int x;
+    int y;
+    int i;
+    char previous;
     if(!game)
         return 1;
     if(!game->board)
         return 1;
-    int x,y,i;
+
     size_t board_size =game->rows*game->cols;
     char neighbours[board_size];
     for(y=0;y<game->rows;y++){
@@ -117,7 +123,7 @@ int game_tick(Game *game){
          
         }
     }
-    char previous;
+
     for(i=0;i<board_size;i++){
         previous = game->board[i];
         if(neighbours[i]<2 || neighbours[i]>3)

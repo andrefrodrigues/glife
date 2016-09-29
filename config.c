@@ -15,6 +15,7 @@ size_t game_config_get_generations(GameConfig *config){
 
 GameConfig *game_config_new_from_cli(int argc, char *argv[]){
     int c;
+    int last;
     GameConfig* gc = malloc(sizeof(GameConfig));
     if(gc==NULL)
         return gc;
@@ -37,7 +38,8 @@ GameConfig *game_config_new_from_cli(int argc, char *argv[]){
         printf("Cannot use both -n and -s\n");
         exit(-1);
     }
-    int last = optind;
+
+    last = optind;
     if(last<argc){
         FILE* f = fopen(argv[last],"r");
         if(f==NULL){
