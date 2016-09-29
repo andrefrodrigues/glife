@@ -103,6 +103,7 @@ int get_cell_alive_neighbours(Game *game,int row, int col){
 }
 
 int game_tick(Game *game){
+    int unchanged=1;
     if(!game)
         return 1;
     if(!game->board)
@@ -116,15 +117,19 @@ int game_tick(Game *game){
          
         }
     }
-
+    char previous;
     for(i=0;i<board_size;i++){
+        previous = game->board[i];
         if(neighbours[i]<2 || neighbours[i]>3)
             game->board[i]=0;
         else if(neighbours[i] ==2 && game->board[i] || neighbours[i]==3)
             game->board[i]=1;
         else
             game->board[i] =0;
+        
+        if(previous!=game->board[i])
+            unchanged=0;
     }
 
-    return 0;
+    return unchanged;
 }
