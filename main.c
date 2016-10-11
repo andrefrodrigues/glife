@@ -6,19 +6,19 @@ int main(int argc,char *argv[]){
 
     Game* g = game_new();
     if( !game_parse_board(g,gc)){
-        int current;
+        size_t current;
         if(!gc->silent){
             printf("Generation 0:\n");
             game_print_board(g);
         }
 
-        for(current=1; current < gc->generations && !game_tick(g); current++){
+        for(current=1; current <= gc->generations && !game_tick(g); current++){
             if(gc->debug){
                 printf("Generation %d:\n",current);
                 game_print_board(g);
             }
         }
-        if(!gc->silent){
+        if(!gc->silent && !gc->debug){
             printf("Generation %d:\n",current);
             game_print_board(g);
         }
